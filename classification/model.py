@@ -1,6 +1,6 @@
 import torch.nn as nn
 import torch.nn.functional as F
-from allennlp.nn.util import sort_batch_by_length
+from allennlp.nn.util import sort_batch_by_length, masked_softmax
 from torch.nn.utils.rnn import pack_padded_sequence
 from torch.nn.utils.rnn import pad_packed_sequence
 import torch
@@ -48,7 +48,7 @@ class RNNSequenceClassifier(nn.Module):
 
 
 
-    def last_dim_softmax(tensor: torch.Tensor, mask: Optional[torch.Tensor] = None) -> torch.Tensor:
+    def last_dim_softmax(tensor: torch.Tensor, mask: None) -> torch.Tensor:
         """
         Takes a tensor with 3 or more dimensions and does a masked softmax over the last dimension.  We
         assume the tensor has shape ``(batch_size, ..., sequence_length)`` and that the mask (if given)
