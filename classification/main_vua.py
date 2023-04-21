@@ -42,7 +42,7 @@ with open('classification_dataset.csv', encoding='latin-1') as f:
     for line in lines:
         raw_dataset.append([line[0], int(line[1]), int(line[2])])
 
-raw_train_vua, raw_val_vua, raw_test_vua = np.split(files, [int(len(files)*0.8), int(len(files)*0.9)])
+raw_train_vua, raw_val_vua, raw_test_vua = np.split(raw_dataset, [int(len(raw_dataset)*0.8), int(len(raw_dataset)*0.9)])
 
 print('VUA dataset division: ', len(raw_train_vua), len(raw_val_vua), len(raw_test_vua))
 
