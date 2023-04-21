@@ -29,7 +29,7 @@ def get_embedding_matrix(word2idx, idx2word, normalization=False):
     """
     # Load the GloVe vectors into a dictionary, keeping only words in vocab
     embedding_dim = 300
-    glove_path = "../glove/glove840B300d.txt"
+    glove_path = "../glove.6B.300d.txt"
     glove_vectors = {}
     with open(glove_path) as glove_file:
         for line in tqdm(glove_file, total=get_num_lines(glove_path)):
@@ -135,7 +135,7 @@ def embed_sequence(sequence, verb_idx, word2idx, glove_embeddings, elmo_embeddin
 
     # 3. embed the sequence by suffix indicators i.e. wether it is a verb or not
     indicated_sequence = [0] * len(words)
-    indicated_sequence[verb_idx] = 1
+    indicated_sequence[int(verb_idx) - 1] = 1
     suffix_part = suffix_embeddings(Variable(torch.LongTensor(indicated_sequence)))
 
     # concatenate three parts: glove+elmo+suffix along axis 1
