@@ -8,6 +8,7 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
+import numpy as np
 
 import csv
 import h5py
@@ -34,26 +35,15 @@ get raw dataset as a list:
     a label: int 1 or 0
 
 '''
-raw_train_vua = []
-with open('../data/VUA/VUA_formatted_train.csv', encoding='latin-1') as f:
+raw_dataset = []
+with open('classification_dataset.csv', encoding='latin-1') as f:
     lines = csv.reader(f)
     next(lines)
     for line in lines:
-        raw_train_vua.append([line[3], int(line[4]), int(line[5])])
+        raw_dataset.append([line[0], int(line[1]), int(line[2])])
 
-raw_val_vua = []
-with open('../data/VUA/VUA_formatted_val.csv', encoding='latin-1') as f:
-    lines = csv.reader(f)
-    next(lines)
-    for line in lines:
-        raw_val_vua.append([line[3], int(line[4]), int(line[5])])
+raw_train_vua, raw_val_vua, raw_test_vua = np.split(files, [int(len(files)*0.8), int(len(files)*0.9)])
 
-raw_test_vua = []
-with open('../data/VUA/VUA_formatted_test.csv', encoding='latin-1') as f:
-    lines = csv.reader(f)
-    next(lines)
-    for line in lines:
-        raw_test_vua.append([line[3], int(line[4]), int(line[5])])
 print('VUA dataset division: ', len(raw_train_vua), len(raw_val_vua), len(raw_test_vua))
 
 """
@@ -70,8 +60,8 @@ word2idx, idx2word = get_word2idx_idx2word(vocab)
 # glove_embeddings a nn.Embeddings
 glove_embeddings = get_embedding_matrix(word2idx, idx2word, normalization=False)
 # elmo_embeddings
-elmos_train_vua = h5py.File('../elmo/VUA_train.hdf5', 'r')
-elmos_val_vua = h5py.File('../elmo/VUA_val.hdf5', 'r')
+elmos_train_vua = None #h5py.File('../elmo/VUA_train.hdf5', 'r')
+elmos_val_vua = None #h5py.File('../elmo/VUA_val.hdf5', 'r')
 # suffix_embeddings: number of suffix tag is 2, and the suffix embedding dimension is 50
 suffix_embeddings = nn.Embedding(2, 50)
 
@@ -206,7 +196,7 @@ the following code is for test data of VUA
 '''
 VUA
 '''
-elmos_test_vua = h5py.File('../elmo/VUA_test.hdf5', 'r')
+elmos_test_vua = None #h5py.File('../elmo/VUA_test.hdf5', 'r')
 embedded_test_vua = [[embed_sequence(example[0], example[1], word2idx,
                                      glove_embeddings, elmos_test_vua, suffix_embeddings), example[2]]
                      for example in raw_test_vua]

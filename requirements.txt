@@ -8,7 +8,7 @@ numpy
 h5py
 
 # Use some tools for batching in util.py
-allennlp==0.3.0
+allennlp
 
 # Plotting performance
 matplotlib
