@@ -1,6 +1,6 @@
 import torch.nn as nn
 import torch.nn.functional as F
-from allennlp.nn.util import sort_batch_by_length, last_dim_softmax
+from allennlp.nn.util import sort_batch_by_length
 from torch.nn.utils.rnn import pack_padded_sequence
 from torch.nn.utils.rnn import pad_packed_sequence
 import torch
@@ -45,6 +45,26 @@ class RNNSequenceClassifier(nn.Module):
         # Dropout layer
         self.dropout_on_input_to_LSTM = nn.Dropout(dropout1)
         self.dropout_on_input_to_linear_layer = nn.Dropout(dropout3)
+
+
+
+    def last_dim_softmax(tensor: torch.Tensor, mask: Optional[torch.Tensor] = None) -> torch.Tensor:
+        """
+        Takes a tensor with 3 or more dimensions and does a masked softmax over the last dimension.  We
+        assume the tensor has shape ``(batch_size, ..., sequence_length)`` and that the mask (if given)
+        has shape ``(batch_size, sequence_length)``.  We first unsqueeze and expand the mask so that it
+        has the same shape as the tensor, then flatten them both to be 2D, pass them through
+        :func:`masked_softmax`, then put the tensor back in its original shape.
+        """
+        tensor_shape = tensor.size()
+        reshaped_tensor = tensor.view(-1, tensor.size()[-1])
+        if mask is not None:
+            while mask.dim() < tensor.dim():
+                mask = mask.unsqueeze(1)
+            mask = mask.expand_as(tensor).contiguous().float()
+            mask = mask.view(-1, mask.size()[-1])
+        reshaped_result = masked_softmax(reshaped_tensor, mask)
+        return reshaped_result.view(*tensor_shape)
 
 
 
