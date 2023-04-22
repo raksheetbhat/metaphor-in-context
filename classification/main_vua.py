@@ -42,7 +42,17 @@ with open('classification_dataset.csv', encoding='latin-1') as f:
     for line in lines:
         raw_dataset.append([line[0], int(line[1]), int(line[2])])
 
-raw_train_vua, raw_val_vua, raw_test_vua = np.split(raw_dataset, [int(len(raw_dataset)*0.8), int(len(raw_dataset)*0.9)])
+raw_train_vua = []
+raw_val_vua = []
+raw_test_vua = []
+
+for i in range(len(raw_dataset)):
+  if i < 0.8*len(raw_dataset):
+    raw_train_vua.append(raw_dataset[i])
+  elif i < 0.9*len(raw_dataset):
+    raw_val_vua.append(raw_dataset[i])
+  else:
+    raw_test_vua.append(raw_dataset[i])
 
 print('VUA dataset division: ', len(raw_train_vua), len(raw_val_vua), len(raw_test_vua))
 
@@ -54,7 +64,7 @@ print('VUA dataset division: ', len(raw_train_vua), len(raw_val_vua), len(raw_te
 get vocabulary and glove embeddings in raw dataset 
 '''
 # vocab is a set of words
-vocab = get_vocab(raw_train_vua + raw_val_vua + raw_test_vua)
+vocab = get_vocab(raw_dataset)
 # two dictionaries. <PAD>: 0, <UNK>: 1
 word2idx, idx2word = get_word2idx_idx2word(vocab)
 # glove_embeddings a nn.Embeddings
@@ -106,7 +116,7 @@ set up model, loss criterion, optimizer
 # dropout1: dropout on input to RNN
 # dropout2: dropout in RNN; would be used if num_layers=1
 # dropout3: dropout on hidden state of RNN to linear layer
-rnn_clf = RNNSequenceClassifier(num_classes=2, embedding_dim=300 + 1024 + 50, hidden_size=300, num_layers=1, bidir=True,
+rnn_clf = RNNSequenceClassifier(num_classes=2, embedding_dim=300 + 50, hidden_size=300, num_layers=1, bidir=True,
                                 dropout1=0.3, dropout2=0.2, dropout3=0.2)
 # Move the model to the GPU if available
 if using_GPU:
@@ -116,7 +126,7 @@ nll_criterion = nn.NLLLoss()
 # Set up an optimizer for updating the parameters of the rnn_clf
 rnn_clf_optimizer = optim.SGD(rnn_clf.parameters(), lr=0.01,momentum=0.9)
 # Number of epochs (passes through the dataset) to train the model for.
-num_epochs = 20
+num_epochs = 3
 
 '''
 3. 2

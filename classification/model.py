@@ -48,7 +48,7 @@ class RNNSequenceClassifier(nn.Module):
 
 
 
-    def last_dim_softmax(tensor: torch.Tensor, mask: None) -> torch.Tensor:
+    def last_dim_softmax(self, tensor: torch.Tensor, mask: None) -> torch.Tensor:
         """
         Takes a tensor with 3 or more dimensions and does a masked softmax over the last dimension.  We
         assume the tensor has shape ``(batch_size, ..., sequence_length)`` and that the mask (if given)
@@ -97,7 +97,7 @@ class RNNSequenceClassifier(nn.Module):
         mask_attention_logits = (attention_logits != 0).type(
             torch.cuda.FloatTensor if inputs.is_cuda else torch.FloatTensor)
         # Shape: (batch_size, sequence_length)
-        softmax_attention_logits = last_dim_softmax(attention_logits, mask_attention_logits)
+        softmax_attention_logits = self.last_dim_softmax(attention_logits, mask_attention_logits)
         # Shape: (batch_size, 1, sequence_length)
         softmax_attention_logits = softmax_attention_logits.unsqueeze(dim=1)
         # Shape of input_encoding: (batch_size, 1, hidden_size )
