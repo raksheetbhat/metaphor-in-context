@@ -29,7 +29,7 @@ def get_embedding_matrix(word2idx, idx2word, normalization=False):
     """
     # Load the GloVe vectors into a dictionary, keeping only words in vocab
     embedding_dim = 300
-    glove_path = "../glove.6B.300d.txt"
+    glove_path = "../glove.840B.300d.txt"
     glove_vectors = {}
     with open(glove_path) as glove_file:
         for line in tqdm(glove_file, total=get_num_lines(glove_path)):
