@@ -163,6 +163,7 @@ def evaluate(evaluation_dataloader, model, criterion, using_GPU):
     """
     # Set model to eval mode, which turns off dropout.
     model.eval()
+    torch.no_grad()
 
     num_correct = 0
     total_examples = 0
