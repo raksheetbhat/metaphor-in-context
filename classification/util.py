@@ -163,30 +163,30 @@ def evaluate(evaluation_dataloader, model, criterion, using_GPU):
     """
     # Set model to eval mode, which turns off dropout.
     model.eval()
-    torch.no_grad()
 
     num_correct = 0
     total_examples = 0
     total_eval_loss = 0
     confusion_matrix = np.zeros((2, 2))
     for (eval_text, eval_lengths, eval_labels) in evaluation_dataloader:
-        eval_text = Variable(eval_text, volatile=True)
-        eval_lengths = Variable(eval_lengths, volatile=True)
-        eval_labels = Variable(eval_labels, volatile=True)
-        if using_GPU:
-            eval_text = eval_text.cuda()
-            eval_lengths = eval_lengths.cuda()
-            eval_labels = eval_labels.cuda()
+        with torch.no_grad():
+            eval_text = eval_text
+            eval_lengths = eval_lengths
+            eval_labels = eval_labels
+            if using_GPU:
+                eval_text = eval_text.cuda()
+                eval_lengths = eval_lengths.cuda()
+                eval_labels = eval_labels.cuda()
 
-        predicted = model(eval_text, eval_lengths)
-        # Calculate loss for this test batch. This is averaged, so multiply
-        # by the number of examples in batch to get a total.
-        total_eval_loss += criterion(predicted, eval_labels).data * eval_labels.size(0)
-        _, predicted_labels = torch.max(predicted.data, 1)
-        total_examples += eval_labels.size(0)
-        num_correct += torch.sum(predicted_labels == eval_labels.data)
-        for i in range(eval_labels.size(0)):
-            confusion_matrix[int(predicted_labels[i]), eval_labels.data[i]] += 1
+            predicted = model(eval_text, eval_lengths)
+            # Calculate loss for this test batch. This is averaged, so multiply
+            # by the number of examples in batch to get a total.
+            total_eval_loss += criterion(predicted, eval_labels).data * eval_labels.size(0)
+            _, predicted_labels = torch.max(predicted.data, 1)
+            total_examples += eval_labels.size(0)
+            num_correct += torch.sum(predicted_labels == eval_labels.data)
+            for i in range(eval_labels.size(0)):
+                confusion_matrix[int(predicted_labels[i]), eval_labels.data[i]] += 1
 
     accuracy = 100 * num_correct / total_examples
     average_eval_loss = total_eval_loss / total_examples

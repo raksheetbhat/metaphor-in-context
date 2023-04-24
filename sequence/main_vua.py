@@ -44,6 +44,7 @@ with open('sequence_dataset.csv', encoding='latin-1') as f:
 
 pos_set = set()
 raw_train_vua = []
+raw_val_vua = []
 for idx, line in enumerate(raw_dataset):
     if idx < 0.8*len(raw_dataset):
         pos_seq = ast.literal_eval(line[1])
@@ -70,9 +71,6 @@ for i in range(len(raw_val_vua)):
 
 print('size of training set, validation set: ', len(raw_train_vua), len(raw_val_vua))
 
-print(raw_train_vua[0])
-sys.exit()
-
 """
 2. Data preparation
 """
@@ -87,8 +85,8 @@ word2idx, idx2word = get_word2idx_idx2word(vocab)
 # glove_embeddings a nn.Embeddings
 glove_embeddings = get_embedding_matrix(word2idx, idx2word, normalization=False)
 # elmo_embeddings
-elmos_train_vua = h5py.File('../elmo/VUA_train.hdf5', 'r')
-elmos_val_vua = h5py.File('../elmo/VUA_val.hdf5', 'r')
+elmos_train_vua = None #h5py.File('../elmo/VUA_train.hdf5', 'r')
+elmos_val_vua = None #h5py.File('../elmo/VUA_val.hdf5', 'r')
 # no suffix embeddings for sequence labeling
 suffix_embeddings = None
 
@@ -151,7 +149,7 @@ loss_criterion = nn.NLLLoss()
 # Set up an optimizer for updating the parameters of the rnn_clf
 rnn_optimizer = optim.Adam(RNNseq_model.parameters(), lr=0.005)
 # Number of epochs (passes through the dataset) to train the model for.
-num_epochs = 10
+num_epochs = 5
 
 '''
 3. 2
