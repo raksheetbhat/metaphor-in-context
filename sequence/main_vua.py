@@ -44,22 +44,21 @@ with open('sequence_dataset.csv', encoding='latin-1') as f:
 
 pos_set = set()
 raw_train_vua = []
-for line in raw_dataset:
-    pos_seq = ast.literal_eval(line[1])
-    label_seq = ast.literal_eval(line[2])
-    assert (len(pos_seq) == len(label_seq))
-    assert (len(line[0].split()) == len(pos_seq))
-    raw_train_vua.append([line[0], label_seq, pos_seq])
-    pos_set.update(pos_seq)
-
-raw_val_vua = []
-for line in raw_dataset:
-    pos_seq = ast.literal_eval(line[1])
-    label_seq = ast.literal_eval(line[2])
-    assert (len(pos_seq) == len(label_seq))
-    assert (len(line[0].split()) == len(pos_seq))
-    raw_val_vua.append([line[0], label_seq, pos_seq])
-    pos_set.update(pos_seq)
+for idx, line in enumerate(raw_dataset):
+    if idx < 0.8*len(raw_dataset):
+        pos_seq = ast.literal_eval(line[1])
+        label_seq = ast.literal_eval(line[2])
+        assert (len(pos_seq) == len(label_seq))
+        assert (len(line[0].split()) == len(pos_seq))
+        raw_train_vua.append([line[0], label_seq, pos_seq])
+        pos_set.update(pos_seq)
+    elif idx < 0.9*len(raw_dataset):
+        pos_seq = ast.literal_eval(line[1])
+        label_seq = ast.literal_eval(line[2])
+        assert (len(pos_seq) == len(label_seq))
+        assert (len(line[0].split()) == len(pos_seq))
+        raw_val_vua.append([line[0], label_seq, pos_seq])
+        pos_set.update(pos_seq)
 
 # embed the pos tags
 pos2idx, idx2pos = get_pos2idx_idx2pos(pos_set)
@@ -70,6 +69,8 @@ for i in range(len(raw_val_vua)):
     raw_val_vua[i][2] = index_sequence(pos2idx, raw_val_vua[i][2])
 
 print('size of training set, validation set: ', len(raw_train_vua), len(raw_val_vua))
+
+print(raw_train_vua[0])
 sys.exit()
 
 """
