@@ -10,6 +10,7 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
+import sys
 
 import csv
 import h5py
@@ -34,30 +35,31 @@ get raw dataset as a list:
     a list of pos: 
 
 '''
+raw_dataset = []
+with open('sequence_dataset.csv', encoding='latin-1') as f:
+    lines = csv.reader(f)
+    next(lines)
+    for line in lines:
+        raw_dataset.append([line[0], line[1], line[2]])
+
 pos_set = set()
 raw_train_vua = []
-with open('../data/VUAsequence/VUA_seq_formatted_train.csv', encoding='latin-1') as f:
-    lines = csv.reader(f)
-    next(lines)
-    for line in lines:
-        pos_seq = ast.literal_eval(line[4])
-        label_seq = ast.literal_eval(line[3])
-        assert (len(pos_seq) == len(label_seq))
-        assert (len(line[2].split()) == len(pos_seq))
-        raw_train_vua.append([line[2], label_seq, pos_seq])
-        pos_set.update(pos_seq)
+for line in raw_dataset:
+    pos_seq = ast.literal_eval(line[1])
+    label_seq = ast.literal_eval(line[2])
+    assert (len(pos_seq) == len(label_seq))
+    assert (len(line[0].split()) == len(pos_seq))
+    raw_train_vua.append([line[0], label_seq, pos_seq])
+    pos_set.update(pos_seq)
 
 raw_val_vua = []
-with open('../data/VUAsequence/VUA_seq_formatted_val.csv', encoding='latin-1') as f:
-    lines = csv.reader(f)
-    next(lines)
-    for line in lines:
-        pos_seq = ast.literal_eval(line[4])
-        label_seq = ast.literal_eval(line[3])
-        assert (len(pos_seq) == len(label_seq))
-        assert (len(line[2].split()) == len(pos_seq))
-        raw_val_vua.append([line[2], label_seq, pos_seq])
-        pos_set.update(pos_seq)
+for line in raw_dataset:
+    pos_seq = ast.literal_eval(line[1])
+    label_seq = ast.literal_eval(line[2])
+    assert (len(pos_seq) == len(label_seq))
+    assert (len(line[0].split()) == len(pos_seq))
+    raw_val_vua.append([line[0], label_seq, pos_seq])
+    pos_set.update(pos_seq)
 
 # embed the pos tags
 pos2idx, idx2pos = get_pos2idx_idx2pos(pos_set)
@@ -66,8 +68,9 @@ for i in range(len(raw_train_vua)):
     raw_train_vua[i][2] = index_sequence(pos2idx, raw_train_vua[i][2])
 for i in range(len(raw_val_vua)):
     raw_val_vua[i][2] = index_sequence(pos2idx, raw_val_vua[i][2])
-print('size of training set, validation set: ', len(raw_train_vua), len(raw_val_vua))
 
+print('size of training set, validation set: ', len(raw_train_vua), len(raw_val_vua))
+sys.exit()
 
 """
 2. Data preparation

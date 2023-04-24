@@ -47,9 +47,9 @@ raw_val_vua = []
 raw_test_vua = []
 
 for i in range(len(raw_dataset)):
-  if i < 13794 #0.8*len(raw_dataset):
+  if i < 13794: #0.8*len(raw_dataset):
     raw_train_vua.append(raw_dataset[i])
-  elif i < 15517 #0.9*len(raw_dataset):
+  elif i < 15517: #0.9*len(raw_dataset):
     raw_val_vua.append(raw_dataset[i])
   else:
     raw_test_vua.append(raw_dataset[i])

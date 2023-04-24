@@ -7642,7 +7642,6 @@ Two two pound fifty .,"[0, 1, 2, 3, 4]","[0, 0, 0, 0, 0]"
 Just M_over .,"[0, 1, 2]","[0, 0, 0]"
 "Mind you , I thought oh yeah .","[0, 1, 2, 3, 4, 5, 6, 7]","[0, 0, 0, 0, 0, 0, 0, 0]"
 Two hundred people .,"[0, 1, 2, 3]","[0, 0, 0, 0]"
-,[0],[0]
 So two hundred paid tonight ?,"[0, 1, 2, 3, 4, 5]","[0, 0, 0, 0, 0, 0]"
 No .,"[0, 1]","[0, 0]"
 M_About hundred and eighty paid .,"[0, 1, 2, 3, 4, 5]","[0, 0, 0, 0, 0, 0]"
@@ -8619,7 +8618,6 @@ Is fifteen .,"[0, 1, 2]","[0, 0, 0]"
 And then,"[0, 1]","[0, 0]"
 And sixes,"[0, 1]","[0, 0]"
 Sixes six,"[0, 1]","[0, 0]"
-,[0],[0]
 M_add six M_add six,"[0, 1, 2, 3]","[1, 0, 1, 0]"
 M_add six,"[0, 1]","[1, 0]"
 M_add six,"[0, 1]","[1, 0]"
@@ -8908,7 +8906,6 @@ Been,[0],[0]
 Oh whereabouts ?,"[0, 1, 2]","[0, 0, 0]"
 or if you want the M_full glory .,"[0, 1, 2, 3, 4, 5, 6, 7]","[0, 0, 0, 0, 0, 1, 0, 0]"
 Do n't tell me you were too ?,"[0, 1, 2, 3, 4, 5, 6, 7]","[0, 0, 0, 0, 0, 0, 0, 0]"
-,[0],[0]
 I used to I used to live in Stockport,"[0, 1, 2, 3, 4, 5, 6, 7, 8]","[0, 0, 0, 0, 0, 0, 0, 0, 0]"
 Stockport .,"[0, 1]","[0, 0]"
 Oh or what have you yes .,"[0, 1, 2, 3, 4, 5, 6]","[0, 0, 0, 0, 0, 0, 0]"
@@ -8943,7 +8940,6 @@ Yeah .,"[0, 1]","[0, 0]"
 No .,"[0, 1]","[0, 0]"
 In .,"[0, 1]","[0, 0]"
 Yeah Chorlton can be Chorlton 's on the border of erm oh god,"[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]","[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]"
-,[0],[0]
 Yeah there 's Stretford is n't there ?,"[0, 1, 2, 3, 4, 5, 6, 7]","[0, 0, 0, 0, 0, 0, 0, 0]"
 No but what,"[0, 1, 2]","[0, 0, 0]"
 "Stretford , Mollyrange er","[0, 1, 2, 3]","[0, 0, 0, 0]"
@@ -8970,7 +8966,6 @@ Mm .,"[0, 1]","[0, 0]"
 we M_went er M_round Mollyrange to get to you know the,"[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]","[0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0]"
 Oh yeah .,"[0, 1, 2]","[0, 0, 0]"
 the erm M_that good place that M_sells secondhand er or damaged erm,"[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]","[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0]"
-,[0],[0]
 "Range Warehouse , M_that 's it yeah .","[0, 1, 2, 3, 4, 5, 6, 7]","[0, 0, 0, 0, 0, 0, 0, 0]"
 Mm .,"[0, 1]","[0, 0]"
 Very good .,"[0, 1, 2]","[0, 0, 0]"
@@ -10150,7 +10145,6 @@ I know what you mean .,"[0, 1, 2, 3, 4, 5]","[0, 0, 0, 0, 0, 0]"
 "She 's sort of got with children then because M_this erm testing , they 've got to a school work outside","[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]","[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]"
 curriculum .,"[0, 1]","[0, 0]"
 "they 've , M_that 's it , they do have to M_take them M_on M_to","[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]","[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]"
-,[0],[0]
 the M_next,"[0, 1]","[0, 1]"
 I mean,"[0, 1]","[0, 0]"
 Yeah well she 's sort of M_with the third year and will M_admit she 's so fed up !,"[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]","[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]"
@@ -10678,9 +10672,6 @@ Oh I do n't know ma !,"[0, 1, 2, 3, 4, 5, 6]","[0, 0, 0, 0, 0, 0, 0]"
 Mm .,"[0, 1]","[0, 0]"
 I will .,"[0, 1, 2]","[0, 0, 0]"
 "Well I 'll put , Kimmy must be there cos Kimmy 's gon na be one our bridesmaids !","[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]","[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]"
-,[0],[0]
-,[0],[0]
-,[0],[0]
 What are you doing ?,"[0, 1, 2, 3, 4]","[0, 0, 0, 0, 0]"
 What are you doing M_lady ?,"[0, 1, 2, 3, 4, 5]","[0, 0, 0, 0, 1, 0]"
 Can Kimmy be one of our bridesmaids ?,"[0, 1, 2, 3, 4, 5, 6, 7]","[0, 0, 0, 0, 0, 0, 0, 0]"
@@ -10692,8 +10683,6 @@ M_Come M_on sweetheart !,"[0, 1, 2, 3]","[1, 0, 0, 0]"
 "I think where ,","[0, 1, 2, 3]","[0, 0, 0, 0]"
 M_Come M_on !,"[0, 1, 2]","[1, 0, 0]"
 Alison 's here to take him out do n't you ?,"[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]","[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]"
-,[0],[0]
-,[0],[0]
 "The , all M_these light fittings , I do n't want to change them over .","[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]","[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]"
 We 're not gon na M_win !,"[0, 1, 2, 3, 4, 5, 6]","[0, 0, 0, 0, 0, 1, 0]"
 What you ?,"[0, 1, 2]","[0, 0, 0]"
@@ -10746,7 +10735,6 @@ If you go now there 'll be nobody there !,"[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]","[0, 
 The fracture clinic she 's going to .,"[0, 1, 2, 3, 4, 5, 6, 7]","[0, 0, 0, 0, 0, 0, 0, 0]"
 The factory ?,"[0, 1, 2]","[0, 0, 0]"
 The,[0],[0]
-,[0],[0]
 "The fracture clinic , not the M_bloody","[0, 1, 2, 3, 4, 5, 6]","[0, 0, 0, 0, 0, 0, 1]"
 Fracture .,"[0, 1]","[0, 0]"
 factory !,"[0, 1]","[0, 0]"
@@ -11246,7 +11234,6 @@ I du n no .,"[0, 1, 2, 3, 4]","[0, 0, 0, 0, 0]"
 Is the guy with this ?,"[0, 1, 2, 3, 4, 5]","[0, 0, 0, 0, 0, 0]"
 Yeah .,"[0, 1]","[0, 0]"
 "This is the Hopa , this German man .","[0, 1, 2, 3, 4, 5, 6, 7, 8]","[0, 0, 0, 0, 0, 0, 0, 0, 0]"
-,[0],[0]
 "No , this is a Swede !","[0, 1, 2, 3, 4, 5, 6]","[0, 0, 0, 0, 0, 0, 0]"
 You got a nappy on !,"[0, 1, 2, 3, 4, 5]","[0, 0, 0, 0, 0, 0]"
 Bander .,"[0, 1]","[0, 0]"
