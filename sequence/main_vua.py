@@ -139,7 +139,7 @@ set up model, loss criterion, optimizer
 # dropout1: dropout on input to RNN
 # dropout2: dropout in RNN; would be used if num_layers!=1
 # dropout3: dropout on hidden state of RNN to linear layer
-RNNseq_model = RNNSequenceModel(num_classes=2, embedding_dim=300 + 1024, hidden_size=300, num_layers=1, bidir=True,
+RNNseq_model = RNNSequenceModel(num_classes=2, embedding_dim=300, hidden_size=300, num_layers=1, bidir=True,
                                 dropout1=0.5, dropout2=0, dropout3=0.1)
 # Move the model to the GPU if available
 if using_GPU:
@@ -272,22 +272,21 @@ print("**********************************************************")
 print("Evalutation on test set: ")
 
 raw_test_vua = []
-with open('../data/VUAsequence/VUA_seq_formatted_test.csv', encoding='latin-1') as f:
-    lines = csv.reader(f)
-    next(lines)
-    for line in lines:
+for line in raw_dataset:
+    if idx >= 0.9*len(raw_dataset):
         # txt_id	sen_ix	sentence	label_seq	pos_seq	labeled_sentence	genre
         pos_seq = ast.literal_eval(line[4])
         label_seq = ast.literal_eval(line[3])
         assert(len(pos_seq) == len(label_seq))
         assert(len(line[2].split()) == len(pos_seq))
         raw_test_vua.append([line[2], label_seq, pos_seq])
+
 print('number of examples(sentences) for test_set ', len(raw_test_vua))
 
 for i in range(len(raw_test_vua)):
     raw_test_vua[i][2] = index_sequence(pos2idx, raw_test_vua[i][2])
 
-elmos_test_vua = h5py.File('../elmo/VUA_test.hdf5', 'r')
+elmos_test_vua = None #h5py.File('../elmo/VUA_test.hdf5', 'r')
 # raw_train_vua: sentence, label_seq, pos_seq
 # embedded_train_vua: embedded_sentence, pos, labels
 embedded_test_vua = [[embed_indexed_sequence(example[0], example[2], word2idx,
@@ -306,22 +305,25 @@ test_dataloader_vua = DataLoader(dataset=test_dataset_vua, batch_size=batch_size
                               collate_fn=TextDataset.collate_fn)
 
 print("Tagging model performance on VUA test set by POS tags: regardless of genres")
-avg_eval_loss, performance_matrix = evaluate(idx2pos, test_dataloader_vua, RNNseq_model, loss_criterion, using_GPU)
+#avg_eval_loss, performance_matrix = evaluate1(idx2pos, test_dataloader_vua, RNNseq_model, loss_criterion, using_GPU)
 
-
+avg_eval_loss, eval_accuracy, precision, recall, f1, fus_f1 = evaluate1(idx2pos, test_dataloader_vua, RNNseq_model,
+                                                                       loss_criterion, using_GPU)
+print("Test Accuracy {}. Test Precision {}. Test Recall {}. Test F1 {}. Test class-wise F1 {}.".format(
+    eval_accuracy, precision, recall, f1, fus_f1))
 
 """
 write the test prediction on the VUA-verb to a file: sequence prediction
 read and extract to get a comparabel performance on VUA-verb test set.
 """
-def get_comparable_performance_test():
-    result = write_predictions(raw_test_vua, test_dataloader_vua, RNNseq_model, using_GPU, '../data/VUAsequence/VUA_seq_formatted_test.csv')
-    f = open('../predictions/vua_seq_test_predictions_LSTMsequence_vua.csv', 'w')
-    writer = csv.writer(f)
-    writer.writerows(result)
-    f.close()
+# def get_comparable_performance_test():
+#     result = write_predictions(raw_test_vua, test_dataloader_vua, RNNseq_model, using_GPU, '../data/VUAsequence/VUA_seq_formatted_test.csv')
+#     f = open('../predictions/vua_seq_test_predictions_LSTMsequence_vua.csv', 'w')
+#     writer = csv.writer(f)
+#     writer.writerows(result)
+#     f.close()
 
-    get_performance_VUAverb_test()
-    get_performance_VUA_test()
+#     get_performance_VUAverb_test()
+#     get_performance_VUA_test()
 
-get_comparable_performance_test()
+# get_comparable_performance_test()
