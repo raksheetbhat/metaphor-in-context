@@ -255,7 +255,7 @@ def evaluate1(idx2pos, evaluation_dataloader, model, criterion, using_GPU):
     total_examples = 0
     total_eval_loss = 0
     confusion_matrix = np.zeros((len(idx2pos), 2, 2))
-    for (eval_text, eval_lengths, eval_labels) in evaluation_dataloader:
+    for (eval_pos_seqs, eval_text, eval_lengths, eval_labels) in evaluation_dataloader:
         with torch.no_grad():
             eval_text = eval_text
             eval_lengths = eval_lengths
@@ -268,12 +268,14 @@ def evaluate1(idx2pos, evaluation_dataloader, model, criterion, using_GPU):
             predicted = model(eval_text, eval_lengths)
             # Calculate loss for this test batch. This is averaged, so multiply
             # by the number of examples in batch to get a total.
-            total_eval_loss += criterion(predicted, eval_labels).data * eval_labels.size(0)
-            _, predicted_labels = torch.max(predicted.data, 1)
+            #total_eval_loss += criterion(predicted, eval_labels).data * eval_labels.size(0)
+            total_eval_loss += criterion(predicted.view(-1, 2), eval_labels.view(-1))
+            _, predicted_labels = torch.max(predicted.data, 2)
             total_examples += eval_labels.size(0)
             num_correct += torch.sum(predicted_labels == eval_labels.data)
-            for i in range(eval_labels.size(0)):
-                confusion_matrix[int(predicted_labels[i]), eval_labels.data[i]] += 1
+            confusion_matrix = update_confusion_matrix(confusion_matrix, predicted_labels, eval_labels.data, eval_pos_seqs)
+            # for i in range(eval_labels.size(0)):
+            #     confusion_matrix[int(predicted_labels[i]), eval_labels.data[i]] += 1
 
     accuracy = 100 * num_correct / total_examples
     average_eval_loss = total_eval_loss / total_examples
@@ -483,7 +485,7 @@ def get_performance_VUAverb_test():
     # get the prediction from LSTM sequence model
     ID2sen_labelseq = {}  # ID tuple --> [genre, label_sequence]
     with open('../predictions/vua_seq_test_predictions_LSTMsequence_vua.csv', encoding='latin-1') as f:
-        # txt_id	sen_ix	sentence	label_seq	pos_seq	labeled_sentence	genre   predictions
+        # txt_id    sen_ix  sentence    label_seq   pos_seq labeled_sentence    genre   predictions
         lines = csv.reader(f)
         next(lines)
         for line in lines:
@@ -533,7 +535,7 @@ def get_performance_VUA_test():
     # get the prediction from LSTM sequence model
     ID2sen_labelseq = {}  # ID tuple --> [genre, label_sequence, pred_sequence]
     with open('../predictions/vua_seq_test_predictions_LSTMsequence_vua.csv', encoding='latin-1') as f:
-        # txt_id	sen_ix	sentence	label_seq	pos_seq	labeled_sentence	genre   predictions
+        # txt_id    sen_ix  sentence    label_seq   pos_seq labeled_sentence    genre   predictions
         lines = csv.reader(f)
         next(lines)
         for line in lines:

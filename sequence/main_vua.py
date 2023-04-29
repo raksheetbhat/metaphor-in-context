@@ -2,7 +2,7 @@ from util import get_num_lines, get_pos2idx_idx2pos, index_sequence, get_vocab, 
     get_word2idx_idx2word, get_embedding_matrix, write_predictions, get_performance_VUAverb_val, \
     get_performance_VUAverb_test, get_performance_VUA_test
 from util import TextDatasetWithGloveElmoSuffix as TextDataset
-from util import evaluate
+from util import evaluate, evaluate1
 from model import RNNSequenceModel
 
 import torch
@@ -182,10 +182,10 @@ for epoch in range(num_epochs):
         num_iter += 1
         # Calculate validation and training set loss and accuracy every 200 gradient updates
         if num_iter % 200 == 0:
-            avg_eval_loss, performance_matrix = evaluate(idx2pos, val_dataloader_vua, RNNseq_model,
+            avg_eval_loss, eval_accuracy, precision, recall, f1, fus_f1 = evaluate1(idx2pos, val_dataloader_vua, RNNseq_model,
                                                          loss_criterion, using_GPU)
-            val_loss.append(avg_eval_loss)
-            val_f1s.append(performance_matrix[:, 2])
+            #val_loss.append(avg_eval_loss)
+            #val_f1s.append(performance_matrix[:, 2])
             print("Iteration {}. Validation Loss {}.".format(num_iter, avg_eval_loss))
 #             avg_eval_loss, performance_matrix = evaluate(idx2pos, train_dataloader_vua, RNNseq_model,
 #                                                          loss_criterion, using_GPU)
@@ -216,10 +216,10 @@ for epoch in range(10):
         num_iter += 1
         # Calculate validation and training set loss and accuracy every 200 gradient updates
         if num_iter % 200 == 0:
-            avg_eval_loss, performance_matrix = evaluate(idx2pos, val_dataloader_vua, RNNseq_model,
+            avg_eval_loss, eval_accuracy, precision, recall, f1, fus_f1 = evaluate1(idx2pos, val_dataloader_vua, RNNseq_model,
                                                          loss_criterion, using_GPU)
-            val_loss.append(avg_eval_loss)
-            val_f1s.append(performance_matrix[:, 2])
+            # val_loss.append(avg_eval_loss)
+            # val_f1s.append(performance_matrix[:, 2])
             print("Iteration {}. Validation Loss {}.".format(num_iter, avg_eval_loss))
 
 #             avg_eval_loss, performance_matrix = evaluate(idx2pos, train_dataloader_vua, RNNseq_model,
@@ -274,12 +274,12 @@ print("Evalutation on test set: ")
 raw_test_vua = []
 for line in raw_dataset:
     if idx >= 0.9*len(raw_dataset):
-        # txt_id	sen_ix	sentence	label_seq	pos_seq	labeled_sentence	genre
-        pos_seq = ast.literal_eval(line[4])
-        label_seq = ast.literal_eval(line[3])
+        # txt_id    sen_ix  sentence    label_seq   pos_seq labeled_sentence    genre
+        pos_seq = ast.literal_eval(line[1])
+        label_seq = ast.literal_eval(line[2])
         assert(len(pos_seq) == len(label_seq))
-        assert(len(line[2].split()) == len(pos_seq))
-        raw_test_vua.append([line[2], label_seq, pos_seq])
+        assert(len(line[0].split()) == len(pos_seq))
+        raw_test_vua.append([line[0], label_seq, pos_seq])
 
 print('number of examples(sentences) for test_set ', len(raw_test_vua))
 
@@ -305,7 +305,7 @@ test_dataloader_vua = DataLoader(dataset=test_dataset_vua, batch_size=batch_size
                               collate_fn=TextDataset.collate_fn)
 
 print("Tagging model performance on VUA test set by POS tags: regardless of genres")
-#avg_eval_loss, performance_matrix = evaluate1(idx2pos, test_dataloader_vua, RNNseq_model, loss_criterion, using_GPU)
+#avg_eval_loss, performance_matrix = evaluate(idx2pos, test_dataloader_vua, RNNseq_model, loss_criterion, using_GPU)
 
 avg_eval_loss, eval_accuracy, precision, recall, f1, fus_f1 = evaluate1(idx2pos, test_dataloader_vua, RNNseq_model,
                                                                        loss_criterion, using_GPU)
